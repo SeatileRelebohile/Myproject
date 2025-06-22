@@ -1,39 +1,519 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Creator Awards 2025 - Vote with PayPal</title>
-    <meta name="description" content="Vote for your favorite creators with PayPal. $5 per vote. Support creators and help them earn milestone bonuses!" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tech Rescue - Professional Tech Repair & Custom Builds</title>
+    <meta name="description" content="Expert tech repair services and custom computer builds. iPhone, MacBook, Samsung repairs and high-performance gaming PCs.">
     
-    <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
-    
-    <!-- Custom Styles -->
     <style>
-      .paypal-button-container {
-        max-width: 300px;
-        margin: 0 auto;
-      }
-      
-      .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-      
-      .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000066;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #000066 0%, #000044 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 163, 255, 0.3);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00A3FF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .phone {
+            background: #00A3FF;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 163, 255, 0.3);
+        }
+
+        .phone:hover {
+            background: #0088CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 163, 255, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #000066 0%, #000088 100%);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2300A3FF" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #00A3FF;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #00A3FF;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: #00A3FF;
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 163, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #0088CC;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 163, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00A3FF;
+            border: 2px solid #00A3FF;
+        }
+
+        .btn-secondary:hover {
+            background: #00A3FF;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Special Offers Section */
+        .offers {
+            padding: 80px 0;
+            background: #000066;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #00A3FF;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            opacity: 0.8;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: white;
+            color: #000066;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00A3FF, #0088CC);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 163, 255, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .product-category {
+            background: #00A3FF;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #000066;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00A3FF;
+            margin-bottom: 20px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(0, 163, 255, 0.3);
+            border-top: 4px solid #00A3FF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            background: #000044;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 2px solid #00A3FF;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: #00A3FF;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: #00A3FF;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .contact-info {
+                justify-content: center;
+                margin-top: 15px;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .product-card {
+                padding: 20px;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .offers {
+                padding: 60px 0;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">Smart Tech Rescue</div>
+                <div class="contact-info">
+                    <a href="tel:+1234567890" class="phone">📞 (123) 456-7890</a>
+                    <a href="tel:+1987654321" class="phone">📱 (198) 765-4321</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Smart Tech Rescue</h1>
+                <p class="tagline">Professional Tech Repair & Custom Builds</p>
+                <p class="subtitle">Expert solutions for all your technology needs</p>
+                <div class="cta-buttons">
+                    <a href="#offers" class="btn btn-primary">View Our Services</a>
+                    <a href="/admin" class="btn btn-secondary">Admin Panel</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers Section -->
+    <section id="offers" class="offers">
+        <div class="container">
+            <h2 class="section-title">Our Special Offers</h2>
+            <p class="section-subtitle">Professional tech services and custom builds at competitive prices</p>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading our latest offers...</p>
+            </div>
+            
+            <div id="products-container" class="products-grid" style="display: none;">
+                <!-- Products will be loaded here dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>📞 (123) 456-7890</p>
+                    <p>📱 (198) 765-4321</p>
+                    <p>✉️ info@smarttechrescue.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="#offers">Device Repairs</a>
+                    <a href="#offers">Custom PC Builds</a>
+                    <a href="#offers">Tech Accessories</a>
+                    <a href="#offers">Data Recovery</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Business Hours</h3>
+                    <p>Monday - Friday: 9AM - 7PM</p>
+                    <p>Saturday: 10AM - 6PM</p>
+                    <p>Sunday: 12PM - 5PM</p>
+                </div>
+            </div>
+            <p>&copy; 2024 Smart Tech Rescue. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Load products from API
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayProducts(data.data);
+                } else {
+                    showError('Failed to load products');
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showError('Unable to connect to server');
+            }
+        }
+
+        function displayProducts(products) {
+            const container = document.getElementById('products-container');
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'none';
+            container.style.display = 'grid';
+            
+            if (products.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: white; grid-column: 1 / -1;">No products available at the moment.</p>';
+                return;
+            }
+            
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    ${product.image_url ? `<img src="${product.image_url}" alt="${product.name}" class="product-image" onerror="this.style.display='none'">` : ''}
+                    <div class="product-category">${product.category}</div>
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-description">${product.description || 'Professional service with quality guarantee.'}</p>
+                    <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>
+                    <div class="product-actions">
+                        <a href="tel:+1234567890" class="btn btn-primary btn-small">Call Now</a>
+                        <a href="tel:+1987654321" class="btn btn-secondary btn-small">Get Quote</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showError(message) {
+            const loading = document.getElementById('loading');
+            loading.innerHTML = `
+                <div style="color: #ff6b6b; text-align: center;">
+                    <p>⚠️ ${message}</p>
+                    <button onclick="loadProducts()" class="btn btn-primary" style="margin-top: 20px;">Try Again</button>
+                </div>
+            `;
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Load products when page loads
+        document.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
 </html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tech Rescue - Admin Panel</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000066;
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #000066 0%, #000044 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 163, 255, 0.3);
+            margin-bottom: 40px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00A3FF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-link {
+            background: #00A3FF;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 163, 255, 0.3);
+        }
+
+        .back-link:hover {
+            background: #0088CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 163, 255, 0.4);
+        }
+
+        /* Main Content */
+        .admin-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .admin-section {
+            background: white;
+            color: #000066;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00A3FF, #0088CC);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #000066;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #000066;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #00A3FF;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #00A3FF;
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 163, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #0088CC;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 163, 255, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Products List */
+        .products-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .product-item {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: bold;
+            color: #000066;
+            margin-bottom: 5px;
+        }
+
+        .product-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00A3FF;
+            margin: 0 15px;
+        }
+
+        .stock-toggle {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .stock-toggle.in-stock {
+            background: #28a745;
+            color: white;
+        }
+
+        .stock-toggle.out-of-stock {
+            background: #dc3545;
+            color: white;
+        }
+
+        .stock-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 163, 255, 0.3);
+            border-top: 3px solid #00A3FF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .admin-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .product-price {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .admin-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">Smart Tech Rescue - Admin</div>
+                <a href="/" class="back-link">← Back to Website</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="admin-content">
+            <!-- Add Product Form -->
+            <div class="admin-section">
+                <h2 class="section-title">
+                    <span>➕</span>
+                    Add New Product
+                </h2>
+                
+                <div id="form-alert" class="alert"></div>
+                
+                <form id="product-form">
+                    <div class="form-group">
+                        <label for="name">Product Name *</label>
+                        <input type="text" id="name" name="name" class="form-control" required 
+                               placeholder="e.g., iPhone 14 Pro Screen Repair">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" class="form-control" required>
+                            <option value="">Select Category</option>
+                            <option value="Repair Services">Repair Services</option>
+                            <option value="Custom Builds">Custom Builds</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Data Recovery">Data Recovery</option>
+                            <option value="Consultation">Consultation</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="price">Price ($) *</label>
+                        <input type="number" id="price" name="price" class="form-control" 
+                               step="0.01" min="0" required placeholder="99.99">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" class="form-control" 
+                                  placeholder="Detailed description of the product or service..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="image_url">Image URL</label>
+                        <input type="url" id="image_url" name="image_url" class="form-control" 
+                               placeholder="https://example.com/image.jpg">
+                    </div>
+                    
+                    <button type="submit" id="submit-btn" class="btn btn-primary">
+                        <span>💾</span>
+                        Add Product
+                    </button>
+                </form>
+            </div>
+
+            <!-- Products List -->
+            <div class="admin-section">
+                <h2 class="section-title">
+                    <span>📦</span>
+                    Current Products
+                </h2>
+                
+                <div id="products-loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+                
+                <div id="products-list" class="products-list" style="display: none;">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form handling
+        const form = document.getElementById('product-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const formAlert = document.getElementById('form-alert');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const productData = Object.fromEntries(formData.entries());
+            
+            // Validate required fields
+            if (!productData.name || !productData.category || !productData.price) {
+                showAlert('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>⏳</span> Adding Product...';
+            
+            try {
+                const response = await fetch('/api/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(productData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Product added successfully!', 'success');
+                    form.reset();
+                    loadProducts(); // Refresh the products list
+                } else {
+                    showAlert(result.message || 'Failed to add product.', 'error');
+                }
+            } catch (error) {
+                console.error('Error adding product:', error);
+                showAlert('Network error. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>💾</span> Add Product';
+            }
+        });
+
+        // Load and display products
+        async function loadProducts() {
+            const loading = document.getElementById('products-loading');
+            const productsList = document.getElementById('products-list');
+            
+            loading.style.display = 'block';
+            productsList.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayProducts(data.data);
+                } else {
+                    productsList.innerHTML = '<p style="text-align: center; color: #666;">Failed to load products.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                productsList.innerHTML = '<p style="text-align: center; color: #666;">Network error loading products.</p>';
+            } finally {
+                loading.style.display = 'none';
+                productsList.style.display = 'block';
+            }
+        }
+
+        function displayProducts(products) {
+            const productsList = document.getElementById('products-list');
+            
+            if (products.length === 0) {
+                productsList.innerHTML = '<p style="text-align: center; color: #666;">No products found.</p>';
+                return;
+            }
+            
+            productsList.innerHTML = products.map(product => `
+                <div class="product-item">
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-details">
+                            ${product.category} • ${product.description ? product.description.substring(0, 50) + '...' : 'No description'}
+                        </div>
+                    </div>
+                    <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>
+                    <button class="stock-toggle ${product.in_stock ? 'in-stock' : 'out-of-stock'}" 
+                            onclick="toggleStock(${product.id}, ${!product.in_stock})">
+                        ${product.in_stock ? '✅ In Stock' : '❌ Out of Stock'}
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Toggle product stock status
+        async function toggleStock(productId, newStatus) {
+            try {
+                const response = await fetch(`/api/products/${productId}/stock`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ in_stock: newStatus })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    loadProducts(); // Refresh the list
+                } else {
+                    showAlert('Failed to update stock status.', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating stock:', error);
+                showAlert('Network error updating stock.', 'error');
+            }
+        }
+
+        // Show alert messages
+        function showAlert(message, type) {
+            formAlert.className = `alert alert-${type === 'error' ? 'error' : 'success'}`;
+            formAlert.textContent = message;
+            formAlert.style.display = 'block';
+            
+            setTimeout(() => {
+                formAlert.style.display = 'none';
+            }, 5000);
+        }
+
+        // Load products when page loads
+        document.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
+</html>
